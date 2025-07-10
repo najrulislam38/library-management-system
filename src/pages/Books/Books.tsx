@@ -18,10 +18,8 @@ const Books = () => {
     );
   }
 
-  console.log(data);
-
   return (
-    <div className="container mx-auto my-20">
+    <div className="container mx-auto my-10  lg:my-20">
       <h1 className="text-2xl md:text-3xl lg:text-4xl text-center mb-10">
         All books
       </h1>
@@ -49,37 +47,39 @@ const Books = () => {
               </tr>
             </thead>
             <tbody>
-              {data?.data?.map((book: IBook) => (
-                <tr key={book._id} className="text-sm text-center">
-                  <td className="px-4  border-b py-3 border-gray-200">
-                    {page * limit + (data?.data?.indexOf(book) ?? 0) + 1}
-                    {console.log(data.data.indexOf(book))}
-                    {/* {(count += 1)} */}
-                  </td>
-                  <td className="px-4  border-b py-3 border-gray-200">
-                    {book.title}
-                  </td>
-                  <td className="px-4  border-b py-3 border-gray-200">
-                    {book.author}
-                  </td>
-                  <td className="px-4  border-b py-3 border-gray-200">
-                    {book.genre}
-                  </td>
-                  <td className="px-4  border-b py-3 border-gray-200">
-                    {book.isbn}
-                  </td>
-                  <td className="px-4  border-b py-3 border-gray-200">
-                    {book.copies}
-                  </td>
-                  <td className="px-4  border-b py-3 border-gray-200">
-                    {book.description}
-                  </td>
-                </tr>
-              ))}
+              {!isLoading &&
+                data?.data?.map((book: IBook) => (
+                  <tr key={book._id} className="text-sm text-center">
+                    <td className="px-4  border-b py-3 border-gray-200">
+                      {page * limit + (data?.data?.indexOf(book) ?? 0) + 1}
+
+                      {/* {(count += 1)} */}
+                    </td>
+                    <td className="px-4  border-b py-3 border-gray-200">
+                      {book.title}
+                    </td>
+                    <td className="px-4  border-b py-3 border-gray-200">
+                      {book.author}
+                    </td>
+                    <td className="px-4  border-b py-3 border-gray-200">
+                      {book.genre}
+                    </td>
+                    <td className="px-4  border-b py-3 border-gray-200">
+                      {book.isbn}
+                    </td>
+                    <td className="px-4  border-b py-3 border-gray-200">
+                      {book.copies}
+                    </td>
+                    <td className="px-4  border-b py-3 border-gray-200">
+                      {book.description}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
-        {/* Pagination Controls */}
+
+        {/* Pagination Control */}
         <div className="flex justify-center items-center mt-6 gap-2">
           <button
             className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
