@@ -8,14 +8,12 @@ import Swal from "sweetalert2";
 const AddBook = () => {
   const navigate = useNavigate();
 
-  const [createBook, { data, isLoading }] = useCreateBookMutation();
+  const [createBook, { data }] = useCreateBookMutation();
 
   // type DraftBook = Pick<
   //   IBook,
   //   "title" | "author" | "genre" | "isbn" | "copies" | "description"
   // >;
-
-  console.log({ data, isLoading });
 
   const {
     register,

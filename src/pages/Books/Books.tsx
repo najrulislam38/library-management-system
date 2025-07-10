@@ -1,13 +1,17 @@
 import type { IBook } from "@/types";
 import { useState } from "react";
 import { useGetBooksQuery } from "./../../redux/api/baseApi";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { NavLink } from "react-router";
 
 const Books = () => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
+
+  //Book Query
   const { data, isLoading } = useGetBooksQuery({ limit, page });
 
-  const totalBooks = data?.data?.length || 0;
+  const totalBooks = data?.totalBooks || 0;
   const totalPages = Math.ceil(totalBooks / limit);
 
   if (isLoading) {
@@ -44,6 +48,9 @@ const Books = () => {
                 <th className="px-4  border-b  py-3 border-gray-200">
                   Description
                 </th>
+                <th className="px-4  border-b  py-3 border-gray-200">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -73,6 +80,20 @@ const Books = () => {
                     <td className="px-4  border-b py-3 border-gray-200">
                       {book.description}
                     </td>
+                    <td className="px-4  border-b py-4 border-gray-200 flex gap-5 items-center justify-around">
+                      <NavLink
+                        to={`/books/${book?._id}`}
+                        className="text-black btn btn-accent btn-sm "
+                      >
+                        View
+                      </NavLink>
+                      <span>
+                        <FaEdit className="text-green-900 hover:text-green-800 cursor-pointer" />
+                      </span>
+                      <span>
+                        <FaTrash className="text-red-500 hover:text-red-400 cursor-pointer" />
+                      </span>
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -89,12 +110,12 @@ const Books = () => {
             Prev
           </button>
           <span>
-            Page {page + 1} of {totalPages + 1}
+            Page {page + 1} of {totalPages}
           </span>
           <button
             className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={page === totalPages}
+            disabled={page === totalPages - 1}
           >
             Next
           </button>

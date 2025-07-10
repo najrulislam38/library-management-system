@@ -1,3 +1,4 @@
+import type { IBook } from "@/types";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
@@ -10,6 +11,9 @@ export const baseApi = createApi({
       query: ({ limit, page }) => `/books?limit=${limit}&page=${page}`,
       providesTags: ["books"],
     }),
+    getSingleBook: build.query<IBook, string>({
+      query: (id) => `/books/${id}`,
+    }),
     createBook: build.mutation({
       query: (bookData) => ({
         url: "/books",
@@ -21,4 +25,8 @@ export const baseApi = createApi({
   }),
 });
 
-export const { useGetBooksQuery, useCreateBookMutation } = baseApi;
+export const {
+  useGetBooksQuery,
+  useGetSingleBookQuery,
+  useCreateBookMutation,
+} = baseApi;
