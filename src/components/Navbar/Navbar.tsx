@@ -52,8 +52,10 @@ const Navbar = () => {
                 tabIndex={0}
                 className=" flex flex-col bg-white gap-1 dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
-                {navLinks?.map((navLink) => (
-                  <NavLink to={navLink?.pathName}>{navLink?.name}</NavLink>
+                {navLinks?.map((navLink, index) => (
+                  <NavLink key={index} to={navLink?.pathName}>
+                    {navLink?.name}
+                  </NavLink>
                 ))}
               </ul>
             </div>
@@ -61,8 +63,10 @@ const Navbar = () => {
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="flex flex-row gap-4 uppercase">
-              {navLinks?.map((navLink) => (
-                <NavLink to={navLink?.pathName}>{navLink?.name}</NavLink>
+              {navLinks?.map((navLink, index) => (
+                <NavLink key={index} to={navLink?.pathName}>
+                  {navLink?.name}
+                </NavLink>
               ))}
             </ul>
           </div>
