@@ -12,7 +12,7 @@ const navLinks = [
   },
   {
     name: "Add Book",
-    pathName: "add-book",
+    pathName: "create-book",
   },
   {
     name: "Borrow Summary",

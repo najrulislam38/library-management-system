@@ -6,7 +6,7 @@ import { NavLink } from "react-router";
 
 const Books = () => {
   const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const limit = 10;
 
   //Book Query
   const { data, isLoading } = useGetBooksQuery({ limit, page });
@@ -87,9 +87,9 @@ const Books = () => {
                       >
                         View
                       </NavLink>
-                      <span>
+                      <NavLink to={`/edit-book/${book?._id}`}>
                         <FaEdit className="text-green-900 hover:text-green-800 cursor-pointer" />
-                      </span>
+                      </NavLink>
                       <span>
                         <FaTrash className="text-red-500 hover:text-red-400 cursor-pointer" />
                       </span>
