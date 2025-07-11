@@ -112,7 +112,7 @@ const Books = () => {
                     <td className="px-4  border-b py-3 border-gray-200">
                       {book.description}
                     </td>
-                    <td className="px-4  border-b py-4 border-gray-200 flex gap-5 items-center justify-around">
+                    <td className="px-4  border-b py-4 border-gray-200 flex gap-4 items-center justify-around">
                       <NavLink
                         to={`/books/${book?._id}`}
                         className="text-black btn btn-accent btn-sm "
@@ -128,6 +128,13 @@ const Books = () => {
                           onClick={() => handleRemoveBook(book?._id)}
                         />
                       </span>
+
+                      <NavLink
+                        to={`/borrow/${book?._id}`}
+                        className="text-black btn btn-success btn-sm "
+                      >
+                        Borrow
+                      </NavLink>
                     </td>
                   </tr>
                 ))}
