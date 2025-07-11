@@ -7,11 +7,13 @@ import Home from "./../pages/Home/Home";
 import SingleBook from "./../pages/Shared/SingleBook/SingleBook";
 import UpdateBook from "./../pages/Shared/UpdateBook/UpdateBook";
 import Borrow from "./../pages/Borrow/Borrow";
+import ErrorPage from "./../components/Error/ErrorPage";
 
 const Router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
