@@ -1,8 +1,12 @@
 import type { IBook } from "@/types";
 import { useState } from "react";
-import { useGetBooksQuery } from "./../../redux/api/baseApi";
+import {
+  useGetBooksQuery,
+  useRemoveBookMutation,
+} from "./../../redux/api/baseApi";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { NavLink } from "react-router";
+import Swal from "sweetalert2";
 
 const Books = () => {
   const [page, setPage] = useState(0);
@@ -10,6 +14,9 @@ const Books = () => {
 
   //Book Query
   const { data, isLoading } = useGetBooksQuery({ limit, page });
+
+  // book remove mutation
+  const [removeBook] = useRemoveBookMutation();
 
   const totalBooks = data?.totalBooks || 0;
   const totalPages = Math.ceil(totalBooks / limit);
@@ -21,6 +28,27 @@ const Books = () => {
       </div>
     );
   }
+
+  const handleRemoveBook = (id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to remove this book",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeBook(id);
+        Swal.fire({
+          title: "Removed!",
+          text: "Your Book has been Remove.",
+          icon: "success",
+        });
+      }
+    });
+  };
 
   return (
     <div className="container mx-auto my-10  lg:my-20">
@@ -75,7 +103,11 @@ const Books = () => {
                       {book.isbn}
                     </td>
                     <td className="px-4  border-b py-3 border-gray-200">
-                      {book.copies}
+                      {book.copies === 0 ? (
+                        <span className="text-green-800">Unavailable</span>
+                      ) : (
+                        book?.copies
+                      )}
                     </td>
                     <td className="px-4  border-b py-3 border-gray-200">
                       {book.description}
@@ -91,7 +123,10 @@ const Books = () => {
                         <FaEdit className="text-green-900 hover:text-green-800 cursor-pointer" />
                       </NavLink>
                       <span>
-                        <FaTrash className="text-red-500 hover:text-red-400 cursor-pointer" />
+                        <FaTrash
+                          className="text-red-500 hover:text-red-400 cursor-pointer"
+                          onClick={() => handleRemoveBook(book?._id)}
+                        />
                       </span>
                     </td>
                   </tr>
