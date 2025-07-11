@@ -1,69 +1,70 @@
-# React + TypeScript + Vite
+# 📚 Library Management System – Project Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### [Live Preview](https://library-management-client-eta.vercel.app/)
 
-Currently, two official plugins are available:
+The **Library Management System** is a full-featured web application designed to streamline the management of books, borrowing activities, and overall library operations. Built using **React**, **Redux Toolkit Query (RTK Query)**, and **TypeScript**, this system offers a clean and responsive user interface along with efficient data handling for both users and administrators.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✅ Key Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 📘 Book Inventory Management
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Add, update, delete, and view books.
+- Form validation with `react-hook-form`.
+- Automatically update the "available" status based on the number of copies.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 📗 Borrow Book System
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Borrow records are managed through a dedicated module.
+- Data consistency ensured via tag invalidation and auto-fetching.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🔌 API Integration
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- RESTful API calls via **Redux Toolkit Query** for all CRUD operations.
+- Optimistic UI updates and cache invalidation handled using `providesTags` and `invalidatesTags`.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 📖 Single Book View & Update
+
+- Fetch single book data by ID for detailed view or editing.
+- Dynamic form population using `react-hook-form` with auto-reset on data load.
+
+### 📝 Form Handling & Validation
+
+- Validations for all form inputs like title, author, genre, ISBN, copies, and description.
+- Real-time error messages for a user-friendly experience.
+
+### 🔔 Feedback and Alerts
+
+- Integrated **SweetAlert2** for user feedback on successful or failed actions.
+
+### ⏳ Loading State
+
+- Reusable `Loader` component to indicate API loading states.
+
+---
+
+## 🧩 Tech Stack
+
+- **Frontend:** React, TypeScript, Tailwind CSS
+- **State Management & Data Fetching:** Redux Toolkit & RTK Query
+- **Form Management:** React Hook Form
+- **Alerts:** SweetAlert2
+- **Backend API:** RESTful API (hosted on Vercel)
+- **Backend:** Nodejs, Expressjs
+- **Database:** MongoDB, Mongoose.
+
+---
+
+## 🚀 Deployment
+
+The backend is hosted on **Vercel**, and the frontend can be deployed on platforms like **Netlify** or **Vercel**, ensuring scalability and performance for production use.
+
+---
+
+## 🔒 Code Structure Highlights
+
+- `baseApi.tsx` centralizes all API endpoints with tag-based cache control.
+- `AddBook.tsx` Add new book submits Books Added forms.
+- `UpdateBook.tsx` dynamically populates and submits update forms.
+- Organized folder structure for scalability and separation of concerns (components, API, pages).
