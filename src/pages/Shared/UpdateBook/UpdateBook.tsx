@@ -1,4 +1,3 @@
-import type { IBook } from "@/types";
 import {
   useGetSingleBookQuery,
   useUpdateBookMutation,
@@ -15,7 +14,7 @@ const UpdateBook = () => {
 
   const { data: singleBookData, isLoading } = useGetSingleBookQuery(id ?? "");
 
-  const book: IBook = singleBookData?.data || {};
+  const book = singleBookData?.data;
   const {
     register,
     handleSubmit,

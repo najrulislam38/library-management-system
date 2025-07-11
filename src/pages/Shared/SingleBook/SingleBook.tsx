@@ -8,7 +8,7 @@ const SingleBook = () => {
 
   const { data, isLoading, isError } = useGetSingleBookQuery(id ?? "");
 
-  const book = data?.data || {};
+  const book = data?.data;
 
   if (isError) {
     return <div>Error...</div>;
@@ -43,7 +43,15 @@ const SingleBook = () => {
         </p>
         <p className=" lg:text-lg">
           <span className="font-medium">Available Copies: </span>
-          {book?.copies > 0 ? book?.copies : <span>Out Of Stock</span>}
+          {typeof book?.copies === "number" ? (
+            book.copies > 0 ? (
+              book.copies
+            ) : (
+              <span>Out Of Stock</span>
+            )
+          ) : (
+            <span>Out Of Stock</span>
+          )}
         </p>
         <p className=" lg:text-lg text-gray-700 text-justify">
           <span className="font-medium text-black">Description: </span>

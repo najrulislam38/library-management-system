@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   useCreateBorrowBookMutation,
   useGetSingleBookQuery,
 } from "./../../redux/api/baseApi";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
-import type { IBook } from "@/types";
 import Swal from "sweetalert2";
 import Loader from "./../../components/Loader/Loader";
 
 const Borrow = () => {
   const { bookId } = useParams();
-  const [book, setBook] = useState<IBook | null>(null);
   const [quantityError, setQuantityError] = useState<string | null>(null);
   const {
     register,
@@ -25,12 +23,6 @@ const Borrow = () => {
   const { data: bookData, isLoading } = useGetSingleBookQuery(bookId ?? "");
 
   const [createBorrowBook] = useCreateBorrowBookMutation();
-
-  //   side effect handle
-  useEffect(() => {
-    const getBook = bookData?.data;
-    setBook(getBook);
-  }, [bookData]);
 
   // increment/decrement
   const incrementQuantity = () => {
@@ -48,15 +40,16 @@ const Borrow = () => {
   const handleSubmitBorrowBook: SubmitHandler<FieldValues> = async (
     field_data
   ) => {
-    if ((book?.copies ?? 0) < field_data?.quantity) {
+    if ((bookData?.data.copies ?? 0) < field_data?.quantity) {
       setQuantityError(
         "Borrow Quantity cannot exceed available copies. Make sure available copies more than quantity."
       );
       return;
     } else {
       setQuantityError(null);
-      const borrowBookData = { book: book?._id, ...field_data };
+      const borrowBookData = { book: bookData?.data?._id, ...field_data };
       const res = await createBorrowBook(borrowBookData);
+      console.log(res);
 
       if (res?.data?.success === true) {
         Swal.fire({
@@ -74,7 +67,7 @@ const Borrow = () => {
   }
 
   return (
-    <div className="container mx-auto my-10 lg:my-20">
+    <div className="container mx-auto my-10 lg:my-20 min-h-[500px]">
       <h1 className="text-2xl md:text-3xl lg:text-4xl text-center mb-6">
         Borrow Book
       </h1>
@@ -93,7 +86,7 @@ const Borrow = () => {
             <input
               type="text"
               placeholder="Book title"
-              defaultValue={book?.title}
+              defaultValue={bookData?.data?.title}
               id="title"
               readOnly
               className="bg-gray-200 p-2 rounded-sm text-sm"

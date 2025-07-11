@@ -5,13 +5,15 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   tagTypes: ["books", "borrow"],
   reducerPath: "baseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://library-management-server-navy-seven.vercel.app/api",
+  }),
   endpoints: (build) => ({
     getBooks: build.query({
       query: ({ limit, page }) => `/books?limit=${limit}&page=${page}`,
       providesTags: ["books"],
     }),
-    getSingleBook: build.query<IBook, string>({
+    getSingleBook: build.query<{ data: IBook }, string>({
       query: (id) => `/books/${id}`,
     }),
     createBook: build.mutation({
@@ -42,7 +44,7 @@ export const baseApi = createApi({
       query: () => ({
         url: "/borrow",
       }),
-      providesTags: ["borrow"],
+      providesTags: ["borrow", "books"],
     }),
     createBorrowBook: build.mutation({
       query: (borrowData) => ({
