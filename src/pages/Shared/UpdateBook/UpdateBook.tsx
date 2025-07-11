@@ -7,6 +7,7 @@ import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import Loader from "./../../../components/Loader/Loader";
 
 const UpdateBook = () => {
   const { id } = useParams();
@@ -71,7 +72,9 @@ const UpdateBook = () => {
     // console.log(data);
   };
 
-  //   console.log(updateData);
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="container mx-auto my-10 lg:my-20">

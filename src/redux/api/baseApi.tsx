@@ -42,6 +42,7 @@ export const baseApi = createApi({
       query: () => ({
         url: "/borrow",
       }),
+      providesTags: ["borrow"],
     }),
     createBorrowBook: build.mutation({
       query: (borrowData) => ({

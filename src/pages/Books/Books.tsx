@@ -7,6 +7,7 @@ import {
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { NavLink } from "react-router";
 import Swal from "sweetalert2";
+import Loader from "./../../components/Loader/Loader";
 
 const Books = () => {
   const [page, setPage] = useState(0);
@@ -24,7 +25,7 @@ const Books = () => {
   if (isLoading) {
     return (
       <div>
-        <p>Loading...</p>
+        <Loader />
       </div>
     );
   }
@@ -104,7 +105,9 @@ const Books = () => {
                     </td>
                     <td className="px-4  border-b py-3 border-gray-200">
                       {book.copies === 0 ? (
-                        <span className="text-green-800">Unavailable</span>
+                        <span className="text-red-700 bg-gray-200 rounded-xs  px-1">
+                          Unavailable
+                        </span>
                       ) : (
                         book?.copies
                       )}

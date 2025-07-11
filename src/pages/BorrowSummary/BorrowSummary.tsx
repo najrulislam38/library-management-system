@@ -1,3 +1,4 @@
+import Loader from "./../../components/Loader/Loader";
 import { useGetBorrowBooksQuery } from "./../../redux/api/baseApi";
 
 const BorrowSummary = () => {
@@ -11,8 +12,12 @@ const BorrowSummary = () => {
     totalQuantity: number;
   }
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
-    <div className="container mx-auto my-10  lg:my-20">
+    <div className="container mx-auto my-10  lg:my-20 min-h-[500px]">
       <h1 className="text-2xl md:text-3xl lg:text-4xl text-center mb-10">
         Borrow Summary
       </h1>

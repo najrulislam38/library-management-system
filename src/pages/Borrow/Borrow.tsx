@@ -7,6 +7,7 @@ import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import type { IBook } from "@/types";
 import Swal from "sweetalert2";
+import Loader from "./../../components/Loader/Loader";
 
 const Borrow = () => {
   const { bookId } = useParams();
@@ -21,7 +22,7 @@ const Borrow = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const { data: bookData } = useGetSingleBookQuery(bookId ?? "");
+  const { data: bookData, isLoading } = useGetSingleBookQuery(bookId ?? "");
 
   const [createBorrowBook] = useCreateBorrowBookMutation();
 
@@ -30,9 +31,6 @@ const Borrow = () => {
     const getBook = bookData?.data;
     setBook(getBook);
   }, [bookData]);
-
-  //   console.log(bookId);
-  //   console.log(book);
 
   // increment/decrement
   const incrementQuantity = () => {
@@ -70,6 +68,10 @@ const Borrow = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="container mx-auto my-10 lg:my-20">

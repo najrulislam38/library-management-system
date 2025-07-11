@@ -1,7 +1,7 @@
 import { FaCartPlus } from "react-icons/fa6";
 import { useGetSingleBookQuery } from "./../../../redux/api/baseApi";
-import { useParams } from "react-router";
-import { BiSolidPurchaseTag } from "react-icons/bi";
+import { NavLink, useParams } from "react-router";
+import Loader from "./../../../components/Loader/Loader";
 
 const SingleBook = () => {
   const { id } = useParams();
@@ -15,7 +15,7 @@ const SingleBook = () => {
   }
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   return (
@@ -50,10 +50,12 @@ const SingleBook = () => {
           {book?.description}
         </p>
         <div className="flex gap-5  lg:gap-12 flex-wrap justify-center items-center mt-10">
-          <button className="btn bg-[#347433] border-[#347433]">
-            <BiSolidPurchaseTag className="text-lg mr-2" />
-            Make Purchase
-          </button>
+          <NavLink
+            to={`/borrow/${book?._id}`}
+            className="btn bg-[#347433] border-[#347433] "
+          >
+            Borrow Book
+          </NavLink>
           <button className="btn bg-[#E59B25] border-[#E59B25]">
             <FaCartPlus className="text-lg mr-2" />
             Add To Cart
