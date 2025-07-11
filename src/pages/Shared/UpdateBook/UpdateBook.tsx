@@ -33,40 +33,23 @@ const UpdateBook = () => {
   const onSubmitForUpdateBook: SubmitHandler<FieldValues> = async (
     formData
   ) => {
-    if (parseInt(formData?.copies) === 0) {
-      const updatedBook = {
-        ...formData,
-        available: false,
-      };
+    const payload = {
+      ...formData,
+      available: parseInt(formData?.copies) === 0 ? false : true,
+    };
 
-      console.log(" Copies Zero hoyese");
-
+    try {
       const res = await updateBook({
         id: formData?._id,
-        ...updatedBook,
+        updatedBook: payload,
       }).unwrap();
-
-      if (res.success === true) {
-        Swal.fire({
-          title: "Book Update Successful",
-          icon: "success",
-          draggable: true,
-        });
-
+      if (res?.success === true) {
+        Swal.fire("Success", "Book updated successful", "success");
         navigate("/books");
       }
-    } else {
-      const res = await updateBook({ id: formData?._id, formData });
-      console.log(res);
-      if (res?.data?.success === true) {
-        Swal.fire({
-          title: "Book Update Successful",
-          icon: "success",
-          draggable: true,
-        });
-
-        navigate("/books");
-      }
+    } catch (error) {
+      console.error("Update failed:", error);
+      Swal.fire("Error", "Failed to update book", "error");
     }
     // console.log(data);
   };
